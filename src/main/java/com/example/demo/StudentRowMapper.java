@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class StudentRowMapper implements RowMapper<Student> {
-
     @Override
     public Student mapRow(ResultSet resultSet, int i) throws SQLException {
     // i 代表取到第幾條 row
