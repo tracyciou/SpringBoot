@@ -18,6 +18,7 @@ public class StudentController {
     @Autowired
     private NamedParameterJdbcTemplate namedparameterjdbctemplate;
 
+    // 新增學生資料
     @PostMapping("/students")
     // Post 對應 create 資料庫
     public String insert(@RequestBody Student student) {
@@ -38,6 +39,7 @@ public class StudentController {
         return "執行 INSERT SQL";
     }
 
+    // 新增多筆學生資料
     @PostMapping("/students/batch")
     public String insertList(@RequestBody List<Student> studentList) {
         String sql = "INSERT INTO student(name) VALUE (:studentName)";
@@ -62,6 +64,7 @@ public class StudentController {
         return "執行一批 INSERT SQL";
     }
 
+    // 刪除學生資料
     @DeleteMapping("/students/{studentId}")
     public String delete(@PathVariable Integer studentId) {
         // 取得放在 url 路徑中 student id 的值
@@ -73,6 +76,7 @@ public class StudentController {
         return "執行 DELETE SQL";
     }
 
+    // 查詢學生資料
     @GetMapping("/students")
     public List<Student> select() {
         String sql = "SELECT id, name FROM student";
@@ -82,6 +86,7 @@ public class StudentController {
         return list;
     }
 
+    // 查詢學生資料 (加上 WHERE)
     @GetMapping("/students/{studentId}")
     public Student select(@PathVariable Integer studentId) {
         String sql = "SELECT id, name FROM student WHERE id = :studentId";
