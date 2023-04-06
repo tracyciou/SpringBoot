@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.Student;
+import com.example.demo.StudentRowMapper;
+import com.example.demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -14,10 +17,13 @@ import java.util.Map;
 @RestController
 public class StudentController {
 
-    // 使用 update() 方法：
     @Autowired
     private NamedParameterJdbcTemplate namedparameterjdbctemplate;
 
+    @Autowired
+    private StudentService studentService;
+
+    // API url 為 http://localhost:8080/students
     // 新增學生資料
     @PostMapping("/students")
     // Post 對應 create 資料庫
@@ -89,20 +95,6 @@ public class StudentController {
     // 查詢學生資料 (加上 WHERE)
     @GetMapping("/students/{studentId}")
     public Student select(@PathVariable Integer studentId) {
-        String sql = "SELECT id, name FROM student WHERE id = :studentId";
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("studentId", studentId);
-
-        List<Student> list = namedparameterjdbctemplate.query(sql, map, new StudentRowMapper());
-        // query() 方法皆是返回 List
-
-        if (list.size() > 0) {
-            return list.get(0);
-            // 因為只要返回一個結果，而非 List
-            // 所以 .get(0) 去取得第一個(唯一) 的結果
-        } else {
-            return null;
-        }
+        return studentService.getById(studentId);
     }
 }
