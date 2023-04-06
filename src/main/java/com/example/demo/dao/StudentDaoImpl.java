@@ -5,7 +5,6 @@ import com.example.demo.StudentRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,5 +34,14 @@ public class StudentDaoImpl implements StudentDao {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public List<Student> getAll() {
+        String sql = "SELECT id, name FROM student";
+        Map<String, Object> map = new HashMap<>();
+
+        List<Student> list = namedParameterJdbcTemplate.query(sql, map, new StudentRowMapper());
+        return list;
     }
 }

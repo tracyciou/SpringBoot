@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.Student;
-import com.example.demo.StudentRowMapper;
 import com.example.demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -9,7 +8,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,11 +83,7 @@ public class StudentController {
     // 查詢學生資料
     @GetMapping("/students")
     public List<Student> select() {
-        String sql = "SELECT id, name FROM student";
-        Map<String, Object> map = new HashMap<>();
-
-        List<Student> list = namedparameterjdbctemplate.query(sql, map, new StudentRowMapper());
-        return list;
+        return studentService.getAll();
     }
 
     // 查詢學生資料 (加上 WHERE)
